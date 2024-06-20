@@ -1,9 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tubes/statistik_page.dart';
 import 'package:tubes/artikel_page.dart';
 import 'package:tubes/solusi_page.dart';
 import 'package:tubes/ui/login.dart';
+import 'crud.dart'; // Sesuaikan dengan lokasi dan nama file CrudPage
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -138,12 +139,39 @@ class HomePage extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20),
-                    Text(
-                      'Helpdesk',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Helpdesk',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      HomeScreen()), // Mengarahkan ke halaman CrudPage
+                            );
+                          },
+                          child: Text('Comment'),
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Color(0xFF2C3E8F), // Warna teks
+                            padding: EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal: 24.0,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 8),
                     Text(
@@ -152,7 +180,7 @@ class HomePage extends StatelessWidget {
                     ),
                     SizedBox(height: 8),
                     Image.asset(
-                        'assets/images/helpdesk.jpg'), // Ensure this path is correct
+                        'assets/images/helpdesk.jpg'), // Pastikan path gambar ini benar
                   ],
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'crud.dart'; // Pastikan untuk mengimpor halaman crud
 
 class StatistikPage extends StatelessWidget {
   const StatistikPage({Key? key}) : super(key: key);
@@ -45,6 +46,18 @@ class StatistikPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ],
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
+              },
+              child: Text('Komentar'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF2C3E8F),
               ),
             ),
           ],

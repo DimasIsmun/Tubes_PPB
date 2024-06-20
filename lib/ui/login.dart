@@ -53,7 +53,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ));
           }
           if (state is LoginSuccess) {
-            // context.read<AuthCubit>().loggedIn();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(
@@ -63,134 +62,148 @@ class _LoginScreenState extends State<LoginScreen> {
             Navigator.pushNamedAndRemoveUntil(context, rHome, (route) => false);
           }
         },
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 30, vertical: 70),
-          child: ListView(
-            children: [
-              Text(
-                "Login",
-                style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xff3D4DE0)),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                "Silahkan masukan e-mail dan password anda",
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                "e-mail",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              TextFormField(
-                controller: emailEdc,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                "password",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-              TextFormField(
-                controller: passEdc,
-                decoration: InputDecoration(
-                  suffixIcon: IconButton(
-                    icon: Icon(passInvisible
-                        ? Icons.visibility
-                        : Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        passInvisible = !passInvisible;
-                      });
-                    },
-                  ),
-                ),
-                obscureText: !passInvisible,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<LoginCubit>()
-                        .login(email: emailEdc.text, password: passEdc.text);
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff3D4DE0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10))),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 70),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
                   child: Text(
                     "Login",
                     style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff3D4DE0)),
+                  ),
+                ),
+                SizedBox(height: 15),
+                Center(
+                  child: Text(
+                    "Silahkan masukan e-mail dan password anda",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+                SizedBox(height: 25),
+                Text(
+                  "e-mail",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                TextFormField(
+                  controller: emailEdc,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    prefixIcon: Icon(Icons.email),
+                    hintText: "Enter your email",
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "password",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+                TextFormField(
+                  controller: passEdc,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    prefixIcon: Icon(Icons.lock),
+                    hintText: "Enter your password",
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        passInvisible ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          passInvisible = !passInvisible;
+                        });
+                      },
+                    ),
+                  ),
+                  obscureText: !passInvisible,
+                ),
+                SizedBox(height: 50),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context
+                          .read<LoginCubit>()
+                          .login(email: emailEdc.text, password: passEdc.text);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      backgroundColor: Color(0xff3D4DE0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24,
-                        color: Colors.white),
-                  )),
-              const SizedBox(
-                height: 30.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      signInWithGoogle();
-                    },
-                    child: const CircleAvatar(
-                      radius: 20.0,
-                      backgroundImage: NetworkImage(
-                          'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png'),
+                        color: Colors.white,
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 30.0,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
+                ),
+                SizedBox(height: 30.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        signInWithGoogle();
+                      },
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: NetworkImage(
+                            'https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png'),
+                      ),
+                    ),
+                    SizedBox(width: 30.0),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PhoneAuthScreen()));
-                    },
-                    child: const CircleAvatar(
-                      radius: 20.0,
-                      backgroundImage: NetworkImage(
-                          'https://t4.ftcdn.net/jpg/04/63/63/59/360_F_463635929_H4y7oelFy8GVclf5XGKYe6N9OEi0Fjyn.jpg'),
+                            builder: (context) => PhoneAuthScreen(),
+                          ),
+                        );
+                      },
+                      child: CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: NetworkImage(
+                            'https://t4.ftcdn.net/jpg/04/63/63/59/360_F_463635929_H4y7oelFy8GVclf5XGKYe6N9OEi0Fjyn.jpg'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Row(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Menengahkan elemen horizontal
-                children: [
-                  Text("Belum punya akun ?"),
-                  TextButton(
+                  ],
+                ),
+                SizedBox(height: 25),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Belum punya akun?"),
+                    TextButton(
                       onPressed: () {
                         Navigator.pushNamed(context, '/register');
                       },
                       child: Text(
                         "Daftar",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xff3D4DE0)),
-                      ))
-                ],
-              )
-            ],
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff3D4DE0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
